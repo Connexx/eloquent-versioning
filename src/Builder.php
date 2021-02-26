@@ -1,13 +1,13 @@
 <?php
 
-namespace ProAI\Versioning;
+namespace BinaryCocoa\Versioning;
 
 use Illuminate\Database\Eloquent\Builder as BaseBuilder;
 
 /**
  * Class Builder
  *
- * @package ProAI\Versioning
+ * @package BinaryCocoa\Versioning
  */
 class Builder extends BaseBuilder {
 	use BuilderTrait;

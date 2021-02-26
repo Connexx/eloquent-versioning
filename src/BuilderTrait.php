@@ -1,13 +1,13 @@
 <?php
 
-namespace ProAI\Versioning;
+namespace BinaryCocoa\Versioning;
 
 use Illuminate\Database\Eloquent\Model;
-use ProAI\Versioning\Exceptions\VersioningException;
+use BinaryCocoa\Versioning\Exceptions\VersioningException;
 
 /**
  * Trait BuilderTrait
- * @package ProAI\Versioning
+ * @package BinaryCocoa\Versioning
  */
 trait BuilderTrait {
 
@@ -39,7 +39,7 @@ trait BuilderTrait {
 	 * @param array $values
 	 *
 	 * @return bool
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	public function insert(array $values) {
 		// get version values & values
@@ -69,7 +69,7 @@ trait BuilderTrait {
 	 * @param string $sequence
 	 *
 	 * @return int
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	public function insertGetId(array $values, $sequence = null) {
 		// get version values & values
@@ -106,7 +106,7 @@ trait BuilderTrait {
 	 * @param array $values
 	 *
 	 * @return int
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	public function update(array $values) {
 		// update timestamps
@@ -219,7 +219,7 @@ trait BuilderTrait {
 	 * @param array $values
 	 *
 	 * @return array
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	protected function getValues(array $values): array {
 		$array = [];
@@ -244,7 +244,7 @@ trait BuilderTrait {
 	 * @param array $values
 	 *
 	 * @return array
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	protected function getVersionValues(array $values): array {
 		$array = [];
@@ -267,7 +267,7 @@ trait BuilderTrait {
 	 * @param array  $versionedKeys
 	 *
 	 * @return string|null
-	 * @throws \ProAI\Versioning\Exceptions\VersioningException
+	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
 	protected function isVersionedKey($key, array $versionedKeys): ?string {
 		$segments = explode('.', $key);

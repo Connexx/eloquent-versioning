@@ -1,16 +1,18 @@
 <?php
 
-namespace ProAI\Versioning\Tests\Models;
+namespace BinaryCocoa\Versioning\Tests\Models;
 
+use BinaryCocoa\Versioning\Tests\Database\Factories\UserFactory;
 use DateTimeInterface;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use ProAI\Versioning\Versionable;
-use ProAI\Versioning\SoftDeletes;
+use BinaryCocoa\Versioning\Versionable;
+use BinaryCocoa\Versioning\SoftDeletes;
 
 /**
  * Class User
  *
- * @package ProAI\Versioning\Tests\Models
+ * @package BinaryCocoa\Versioning\Tests\Models
  *
  * @property int $id
  * @property string $city
@@ -19,6 +21,7 @@ use ProAI\Versioning\SoftDeletes;
  * @property string $password
  * @property string $remember_token
  * @property string $username
+ * @property int    $version
  * @property \Carbon\Carbon|null $created_at
  * @property \Carbon\Carbon|null $updated_at
  * @property \Carbon\Carbon|null $deleted_at
@@ -28,6 +31,7 @@ use ProAI\Versioning\SoftDeletes;
 class User extends Authenticatable {
 	use Versionable;
 	use SoftDeletes;
+	use HasFactory;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -60,5 +64,15 @@ class User extends Authenticatable {
 	protected function serializeDate(DateTimeInterface $date)
 	{
 	    return $date->toJson();
+	}
+
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return UserFactory::new();
 	}
 }

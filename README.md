@@ -1,15 +1,23 @@
 # Eloquent Versioning
 
-[![Build status](https://scrutinizer-ci.com/g/ProAI/eloquent-versioning/badges/build.png?b=master)](https://scrutinizer-ci.com/g/ProAI/eloquent-versioning/) [![Quality score](https://scrutinizer-ci.com/g/ProAI/eloquent-versioning/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/ProAI/eloquent-versioning/) [![Latest Stable Version](https://poser.pugx.org/proai/eloquent-versioning/v/stable)](https://packagist.org/packages/proai/eloquent-versioning) [![Total Downloads](https://poser.pugx.org/proai/eloquent-versioning/downloads)](https://packagist.org/packages/proai/eloquent-versioning) [![Latest Unstable Version](https://poser.pugx.org/proai/eloquent-versioning/v/unstable)](https://packagist.org/packages/proai/eloquent-versioning) [![License](https://poser.pugx.org/proai/eloquent-versioning/license)](https://packagist.org/packages/proai/eloquent-versioning)
+[![Build status](https://scrutinizer-ci.com/g/BinaryCocoa/eloquent-versioning/badges/build.png?b=master)](https://scrutinizer-ci.com/g/BinaryCocoa/eloquent-versioning/) [![Quality score](https://scrutinizer-ci.com/g/BinaryCocoa/eloquent-versioning/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/BinaryCocoa/eloquent-versioning/) [![Latest Stable Version](https://poser.pugx.org/binary-cocoa/eloquent-versioning/v/stable)](https://packagist.org/packages/binary-cocoa/eloquent-versioning) [![Total Downloads](https://poser.pugx.org/binary-cocoa/eloquent-versioning/downloads)](https://packagist.org/packages/binary-cocoa/eloquent-versioning) [![Latest Unstable Version](https://poser.pugx.org/binary-cocoa/eloquent-versioning/v/unstable)](https://packagist.org/packages/binary-cocoa/eloquent-versioning) [![License](https://poser.pugx.org/binary-cocoa/eloquent-versioning/license)](https://packagist.org/packages/binary-cocoa/eloquent-versioning)
 
 This is an extension for the Eloquent ORM to support versioning. You can specify attributes as versioned. If an attribute is specified as versioned the value will be saved in a separate version table on each update. It is possible to use timestamps and soft deletes with this feature.
 
 ## Installation
 
-Eloquent Versioning is distributed as a composer package. So you first have to add the package to your `composer.json` file:
+Eloquent Versioning is distributed as a composer package. So you first have to add the repository and package to your `composer.json` file:
 
 ```
-"proai/eloquent-versioning": "~1.0"
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/BinaryCocoa/eloquent-versioning"
+    }
+],
+"require": {
+    "binary-cocoa/eloquent-versioning": "~3.0"
+}
 ```
 
 Then you have to run `composer update` to install the package.
@@ -50,8 +58,8 @@ The referring Eloquent model should include the code below:
 namespace Acme\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use ProAI\Versioning\Versionable;
-use ProAI\Versioning\SoftDeletes;
+use BinaryCocoa\Versioning\Versionable;
+use BinaryCocoa\Versioning\SoftDeletes;
 
 class User extends Model
 {
@@ -108,7 +116,7 @@ You can use timestamps in two ways. For both you have to set `$timestamps = true
 
 ### Soft Deletes
 
-If you use the `Versionable` trait with soft deletes, you have to use the `ProAI\Versioning\SoftDeletes` trait **from this package** instead of the Eloquent soft deletes trait.
+If you use the `Versionable` trait with soft deletes, you have to use the `BinaryCocoa\Versioning\SoftDeletes` trait **from this package** instead of the Eloquent soft deletes trait.
 
 * Normal soft deletes<br>Just use a `deleted_at` column in the main table. Then on delete or on restore the `deleted_at` value will be updated.
 
@@ -125,7 +133,7 @@ namespace Acme\Versioning;
 
 trait Versionable
 {
-    use \ProAI\Versioning\BaseVersionable;
+    use \BinaryCocoa\Versioning\BaseVersionable;
     
     public function newEloquentBuilder($query)
     {
@@ -136,13 +144,13 @@ trait Versionable
 
 Obviously you have to replace `MyVersioningBuilder` by the classname of your custom builder. In addition you have to make sure that your custom builder implements the functionality of the versioning query builder. There are some strategies to do this:
 
-* Extend the versioning query builder `ProAI\Versioning\Builder`
-* Use the versioning builder trait `ProAI\Versioning\BuilderTrait`
+* Extend the versioning query builder `BinaryCocoa\Versioning\Builder`
+* Use the versioning builder trait `BinaryCocoa\Versioning\BuilderTrait`
 * Copy and paste the code from the versioning query builder to your custom builder
 
 ## Support
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/proai/eloquent-versioning/issues).
+Bugs and feature requests are tracked on [GitHub](https://github.com/BinaryCocoa/eloquent-versioning/issues).
 
 ## License
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace ProAI\Versioning\Tests;
+namespace BinaryCocoa\Versioning\Tests;
 
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
@@ -20,11 +20,32 @@ class TestCase extends BaseTestCase {
 	}
 
 	/**
+	 * Define environment setup.
+	 *
+	 * @param  \Illuminate\Foundation\Application  $app
+	 *
+	 * @return void
+	 */
+	protected function defineEnvironment($app)
+	{
+		$app['config']->set('database.default', 'testing');
+	}
+
+	/**
+	 * Define database migrations.
+	 *
+	 * @return void
+	 */
+	protected function defineDatabaseMigrations()
+	{
+		$this->artisan('migrate', ['--database' => 'testing'])->run();
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function setUp(): void {
 		parent::setUp();
-		$this->loadMigrationsFrom(__DIR__ . '/database/migrations');
-		$this->withFactories(__DIR__ . '/database/factories');
+		$this->loadMigrationsFrom(__DIR__ . '/Database/migrations');
 	}
 }

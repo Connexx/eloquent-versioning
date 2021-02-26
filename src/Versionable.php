@@ -1,12 +1,12 @@
 <?php
 
-namespace ProAI\Versioning;
+namespace BinaryCocoa\Versioning;
 
 use Illuminate\Support\Arr;
 
 /**
  * Trait Versionable
- * @package ProAI\Versioning
+ * @package BinaryCocoa\Versioning
  * @mixin \Illuminate\Database\Eloquent\Model
  *
  * @method static static|\Illuminate\Database\Eloquent\Builder|Builder version($version)
@@ -42,7 +42,7 @@ trait Versionable {
 	 * Create a new Eloquent query builder for the model.
 	 *
 	 * @param  \Illuminate\Database\Query\Builder $query
-	 * @return \ProAI\Versioning\Builder|static
+	 * @return \BinaryCocoa\Versioning\Builder|static
 	 */
 	public function newEloquentBuilder($query) {
 		return new Builder($query);

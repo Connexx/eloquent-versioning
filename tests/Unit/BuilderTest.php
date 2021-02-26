@@ -1,17 +1,17 @@
 <?php
 
-namespace ProAI\Versioning\Tests\Unit;
+namespace BinaryCocoa\Versioning\Tests\Unit;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use ProAI\Versioning\Exceptions\VersioningException;
-use ProAI\Versioning\Tests\Models\Post;
-use ProAI\Versioning\Tests\Models\User;
-use ProAI\Versioning\Tests\TestCase;
+use BinaryCocoa\Versioning\Exceptions\VersioningException;
+use BinaryCocoa\Versioning\Tests\Models\Post;
+use BinaryCocoa\Versioning\Tests\Models\User;
+use BinaryCocoa\Versioning\Tests\TestCase;
 
 /**
  * Class BuilderTest
- * @package ProAI\Versioning\Tests
+ * @package BinaryCocoa\Versioning\Tests
  */
 class BuilderTest extends TestCase {
 
@@ -20,7 +20,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillRetrieveVersionedAttributes(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 
 		$this->assertEquals([
 			'username'          => $model->username,
@@ -40,7 +40,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillRetrieveTheLatestVersionedAttributes(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 
 		$model->update([
 			'city'  => 'Citadel'
@@ -60,7 +60,7 @@ class BuilderTest extends TestCase {
 		$now = now();
 
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 		$city = $model->city;
 
 		// Version 2 is tomorrow.
@@ -106,7 +106,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillRetrieveAllVersions(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 		$city = $model->city;
 
 		$model->update([
@@ -141,7 +141,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillRetrieveTheCorrectMomentsAttributes(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([
+		$model = User::factory()->create([
 			'updated_at' => Carbon::now()->subDays(2)
 		]);
 		$date = $model->created_at;
@@ -151,7 +151,7 @@ class BuilderTest extends TestCase {
 			'version'       => 2,
 			'email'         => $model->email,
 			'city'          => 'Citadel',
-			'updated_at'    => $date->copy()->addDays(1)
+			'updated_at'    => $date->copy()->addDay()
 		]);
 
 		DB::table('users_version')->insert([
@@ -165,7 +165,7 @@ class BuilderTest extends TestCase {
 		$version1 = User::moment($date)->find($model->id);
 		$this->assertEquals(1, $version1->version);
 
-		$version2 = User::moment($date->copy()->addDays(1))->find($model->id);
+		$version2 = User::moment($date->copy()->addDay())->find($model->id);
 		$this->assertEquals(2, $version2->version);
 
 		$version3 = User::moment($date->copy()->addDays(2))->find($model->id);
@@ -177,7 +177,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillRemovePreviousJoins(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 		$city = $model->city;
 
 		$model->update([
@@ -200,7 +200,7 @@ class BuilderTest extends TestCase {
 	 */
 	public function itWillThrowExceptionWhenKeysAreTooLong(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 
 		$this->expectException(VersioningException::class);
 
@@ -217,8 +217,9 @@ class BuilderTest extends TestCase {
 	 * @param string $model
 	 */
 	public function itWillDeleteTheVersionedTable(string $model): void {
-		factory($model)->create([]);
-		factory($model)->create([]);
+		/** @var User|Post|string $model */
+		$model::factory()->create([]);
+		$model::factory()->create([]);
 
 		$model::version(1)->delete();
 
@@ -232,8 +233,9 @@ class BuilderTest extends TestCase {
 	 * @param string $model
 	 */
 	public function itWillForceDeleteTheVersionedTable(string $model): void {
-		factory($model)->create([]);
-		factory($model)->create([]);
+		/** @var User|Post|string $model */
+		$model::factory()->create([]);
+		$model::factory()->create([]);
 
 		$model::version(1)->forceDelete();
 

@@ -1,15 +1,15 @@
 <?php
 
-namespace ProAI\Versioning\Tests\Unit;
+namespace BinaryCocoa\Versioning\Tests\Unit;
 
-use ProAI\Versioning\Tests\Models\Post;
-use ProAI\Versioning\Tests\Models\User;
-use ProAI\Versioning\Tests\TestCase;
+use BinaryCocoa\Versioning\Tests\Models\Post;
+use BinaryCocoa\Versioning\Tests\Models\User;
+use BinaryCocoa\Versioning\Tests\TestCase;
 
 /**
  * Class SoftDeletesTest
  *
- * @package ProAI\Versioning\Tests
+ * @package BinaryCocoa\Versioning\Tests
  */
 class SoftDeletesTest extends TestCase {
 
@@ -21,7 +21,8 @@ class SoftDeletesTest extends TestCase {
 	 * @throws \Exception
 	 */
 	public function itWillSaveDeletedAt(string $model): void {
-		$model = factory($model)->create([]);
+		/** @var User|Post|string $model */
+		$model = $model::factory()->create([]);
 		$model->delete();
 
 		$version = $model::withTrashed()->first();
@@ -35,7 +36,7 @@ class SoftDeletesTest extends TestCase {
 	 */
 	public function itWillGetTheCorrectDeletedAtColumnOnTheMainTable(): void {
 		/** @var Post $model */
-		$model = factory(Post::class)->create([]);
+		$model = Post::factory()->create([]);
 
 		$this->assertEquals('posts.deleted_at', $model->getQualifiedDeletedAtColumn());
 	}
@@ -45,7 +46,7 @@ class SoftDeletesTest extends TestCase {
 	 */
 	public function itWillGetTheCorrectDeletedAtColumnOnTheVersionTable(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model =User:: factory()->create([]);
 
 		$this->assertEquals('users_version.deleted_at', $model->getQualifiedDeletedAtColumn());
 	}
@@ -56,7 +57,7 @@ class SoftDeletesTest extends TestCase {
 	 */
 	public function itWillSaveDeletedAtInTheMainTable(): void {
 		/** @var Post $model */
-		$model = factory(Post::class)->create([]);
+		$model = Post::factory()->create([]);
 		$model->delete();
 
 		$this->assertDatabaseHas('posts', [
@@ -71,7 +72,7 @@ class SoftDeletesTest extends TestCase {
 	 */
 	public function itWillSaveDeletedAtInTheVersionTable(): void {
 		/** @var User $model */
-		$model = factory(User::class)->create([]);
+		$model = User::factory()->create([]);
 		$model->delete();
 
 		$this->assertDatabaseHas('users_version', [

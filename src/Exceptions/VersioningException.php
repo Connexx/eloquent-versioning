@@ -1,10 +1,10 @@
 <?php
 
-namespace ProAI\Versioning\Exceptions;
+namespace BinaryCocoa\Versioning\Exceptions;
 
 /**
  * Class VersioningException
- * @package ProAI\Versioning\Exceptions
+ * @package BinaryCocoa\Versioning\Exceptions
  */
 class VersioningException extends \Exception {
 

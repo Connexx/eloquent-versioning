@@ -1,13 +1,13 @@
 <?php
 
-namespace ProAI\Versioning;
+namespace BinaryCocoa\Versioning;
 
 use Illuminate\Database\Eloquent\SoftDeletes as SoftDeletesTrait;
 
 /**
  * Trait SoftDeletes
  *
- * @package ProAI\Versioning
+ * @package BinaryCocoa\Versioning
  */
 trait SoftDeletes {
 	use SoftDeletesTrait;

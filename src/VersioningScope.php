@@ -1,6 +1,6 @@
 <?php
 
-namespace ProAI\Versioning;
+namespace BinaryCocoa\Versioning;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Carbon\Carbon;
 
 /**
  * Class VersioningScope
- * @package ProAI\Versioning
+ * @package BinaryCocoa\Versioning
  */
 class VersioningScope implements Scope {
 
@@ -25,7 +25,7 @@ class VersioningScope implements Scope {
 	 * Apply the scope to a given Eloquent query builder.
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder  $builder
-	 * @param  \Illuminate\Database\Eloquent\Model|\ProAI\Versioning\Versionable  $model
+	 * @param  \Illuminate\Database\Eloquent\Model|\BinaryCocoa\Versioning\Versionable  $model
 	 * @return void
 	 */
 	public function apply(Builder $builder, Model $model) {
@@ -43,7 +43,7 @@ class VersioningScope implements Scope {
 	 * Remove the scope from the given Eloquent query builder.
 	 *
 	 * @param  \Illuminate\Database\Eloquent\Builder  $builder
-	 * @param  \Illuminate\Database\Eloquent\Model|\ProAI\Versioning\Versionable  $model
+	 * @param  \Illuminate\Database\Eloquent\Model|\BinaryCocoa\Versioning\Versionable  $model
 	 * @return void
 	 */
 	public function remove(Builder $builder, Model $model): void {
@@ -76,7 +76,7 @@ class VersioningScope implements Scope {
 	 */
 	protected function addVersion(Builder $builder): void {
 		$builder->macro('version', function (Builder $builder, $version) {
-			/** @var Model|\ProAI\Versioning\Versionable $model */
+			/** @var Model|\BinaryCocoa\Versioning\Versionable $model */
 			$model = $builder->getModel();
 
 			$this->remove($builder, $builder->getModel());
@@ -98,7 +98,7 @@ class VersioningScope implements Scope {
 	 */
 	protected function addAllVersions(Builder $builder): void {
 		$builder->macro('allVersions', function (Builder $builder) {
-			/** @var Model|\ProAI\Versioning\Versionable $model */
+			/** @var Model|\BinaryCocoa\Versioning\Versionable $model */
 			$model = $builder->getModel();
 
 			$this->remove($builder, $builder->getModel());
@@ -119,7 +119,7 @@ class VersioningScope implements Scope {
 	 */
 	protected function addMoment(Builder $builder): void {
 		$builder->macro('moment', function (Builder $builder, Carbon $moment) {
-			/** @var Model|\ProAI\Versioning\Versionable $model */
+			/** @var Model|\BinaryCocoa\Versioning\Versionable $model */
 			$model = $builder->getModel();
 
 			$this->remove($builder, $builder->getModel());

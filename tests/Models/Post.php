@@ -1,15 +1,17 @@
 <?php
 
-namespace ProAI\Versioning\Tests\Models;
+namespace BinaryCocoa\Versioning\Tests\Models;
 
+use BinaryCocoa\Versioning\Tests\Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use ProAI\Versioning\Versionable;
-use ProAI\Versioning\SoftDeletes;
+use BinaryCocoa\Versioning\Versionable;
+use BinaryCocoa\Versioning\SoftDeletes;
 
 /**
  * Class Post
  *
- * @package ProAI\Versioning\Tests\Models
+ * @package BinaryCocoa\Versioning\Tests\Models
  *
  * @property int $id
  * @property string $latest_version
@@ -22,6 +24,7 @@ use ProAI\Versioning\SoftDeletes;
 class Post extends Model {
 	use Versionable;
 	use SoftDeletes;
+	use HasFactory;
 
 	/**
 	 * The attributes that are mass assignable.
@@ -35,4 +38,14 @@ class Post extends Model {
 	public $timestamps = true;
 
 	public $versioned = ['content', 'updated_at'];
+
+	/**
+	 * Create a new factory instance for the model.
+	 *
+	 * @return \Illuminate\Database\Eloquent\Factories\Factory
+	 */
+	protected static function newFactory()
+	{
+		return PostFactory::new();
+	}
 }

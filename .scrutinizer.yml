@@ -13,27 +13,23 @@ build:
           - php-scrutinizer-run
           - command: phpcs-run
             use_website_config: false
-    php72:
-      environment:
-        php:
-          version: 7.2
-      tests:
-        override:
-          - command: ./vendor/bin/phpunit --prepend .coverage-filter.php
-    php73:
-      environment:
-        php:
-          version: 7.3
-      tests:
-        override:
-          - command: ./vendor/bin/phpunit --prepend .coverage-filter.php
     php74:
       environment:
         php:
           version: 7.4
       tests:
         override:
-          - command: ./vendor/bin/phpunit --coverage-clover=my-coverage-file --prepend .coverage-filter.php
+          - command: ./vendor/bin/phpunit --coverage-clover=my-coverage-file
+            coverage:
+              file: my-coverage-file
+              format: php-clover
+    php80:
+      environment:
+        php:
+          version: 8.0
+      tests:
+        override:
+          - command: php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-clover=my-coverage-file
             coverage:
               file: my-coverage-file
               format: php-clover
