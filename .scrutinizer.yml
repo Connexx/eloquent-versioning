@@ -29,7 +29,7 @@ build:
           version: 8.0
       tests:
         override:
-          - command: ./vendor/bin/phpunit --coverage-clover=my-coverage-file
+          - command: php -dxdebug.mode=coverage ./vendor/bin/phpunit --coverage-clover=my-coverage-file
             coverage:
               file: my-coverage-file
               format: php-clover
