@@ -12,7 +12,6 @@ use BinaryCocoa\Versioning\Tests\TestCase;
  * @package BinaryCocoa\Versioning\Tests
  */
 class SoftDeletesTest extends TestCase {
-
 	/**
 	 * @test
 	 *
@@ -46,7 +45,7 @@ class SoftDeletesTest extends TestCase {
 	 */
 	public function itWillGetTheCorrectDeletedAtColumnOnTheVersionTable(): void {
 		/** @var User $model */
-		$model =User:: factory()->create([]);
+		$model = User:: factory()->create([]);
 
 		$this->assertEquals('users_version.deleted_at', $model->getQualifiedDeletedAtColumn());
 	}

@@ -21,8 +21,7 @@ class PostFactory extends Factory {
 	 *
 	 * @return array
 	 */
-	public function definition()
-	{
+	public function definition() {
 		return [
 			'title' => $this->faker->title,
 			'content' => $this->faker->text,

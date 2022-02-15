@@ -21,8 +21,7 @@ class CommentFactory extends Factory {
 	 *
 	 * @return array
 	 */
-	public function definition()
-	{
+	public function definition() {
 		return [
 			'title' => $this->faker->sentence,
 			'content' => $this->faker->text,
