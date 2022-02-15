@@ -5,7 +5,6 @@ namespace BinaryCocoa\Versioning\Tests;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
 class TestCase extends BaseTestCase {
-
 	/**
 	 * {@inheritdoc}
 	 */
@@ -26,8 +25,7 @@ class TestCase extends BaseTestCase {
 	 *
 	 * @return void
 	 */
-	protected function defineEnvironment($app)
-	{
+	protected function defineEnvironment($app) {
 		$app['config']->set('database.default', 'testing');
 	}
 
@@ -36,8 +34,7 @@ class TestCase extends BaseTestCase {
 	 *
 	 * @return void
 	 */
-	protected function defineDatabaseMigrations()
-	{
+	protected function defineDatabaseMigrations() {
 		$this->artisan('migrate', ['--database' => 'testing'])->run();
 	}
 

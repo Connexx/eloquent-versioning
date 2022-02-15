@@ -14,7 +14,6 @@ use BinaryCocoa\Versioning\Tests\TestCase;
  * @package BinaryCocoa\Versioning\Tests
  */
 class BuilderTest extends TestCase {
-
 	/**
 	 * @test
 	 */

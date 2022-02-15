@@ -13,7 +13,6 @@ use BinaryCocoa\Versioning\Tests\TestCase;
  * @package BinaryCocoa\Versioning\Tests\Unit
  */
 class VersionableTest extends TestCase {
-
 	/**
 	* @test
 	*/

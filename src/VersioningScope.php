@@ -13,7 +13,6 @@ use Carbon\Carbon;
  * @package BinaryCocoa\Versioning
  */
 class VersioningScope implements Scope {
-
 	/**
 	 * All of the extensions to be added to the builder.
 	 *

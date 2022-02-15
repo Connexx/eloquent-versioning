@@ -1,4 +1,5 @@
 <?php
+
 namespace BinaryCocoa\Versioning\Tests\Database\Factories;
 
 use BinaryCocoa\Versioning\Tests\Models\User;
@@ -20,8 +21,7 @@ class UserFactory extends Factory {
 	 *
 	 * @return array
 	 */
-	public function definition()
-	{
+	public function definition() {
 		return [
 			'email'         => $this->faker->unique()->safeEmail,
 			'username'      => $this->faker->userName,

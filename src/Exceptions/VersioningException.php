@@ -7,5 +7,4 @@ namespace BinaryCocoa\Versioning\Exceptions;
  * @package BinaryCocoa\Versioning\Exceptions
  */
 class VersioningException extends \Exception {
-
 }

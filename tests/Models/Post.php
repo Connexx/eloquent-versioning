@@ -44,8 +44,7 @@ class Post extends Model {
 	 *
 	 * @return \Illuminate\Database\Eloquent\Factories\Factory
 	 */
-	protected static function newFactory()
-	{
+	protected static function newFactory() {
 		return PostFactory::new();
 	}
 }

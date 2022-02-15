@@ -14,7 +14,6 @@ use Illuminate\Support\Arr;
  * @method static static|\Illuminate\Database\Eloquent\Builder|Builder moment(\Carbon\Carbon $moment)
  */
 trait Versionable {
-
 	/**
 	 * Boot the versionable trait for a model.
 	 *

@@ -2,6 +2,7 @@
 
 namespace BinaryCocoa\Versioning;
 
+use ArrayObject;
 use Illuminate\Database\Eloquent\Model;
 use BinaryCocoa\Versioning\Exceptions\VersioningException;
 
@@ -24,6 +25,7 @@ trait BuilderTrait {
 			: $columns;
 		foreach ($tempColumns as $column) {
 			$segments = explode('.', $column);
+			// Only add version fields if we are retrieving from the base table.
 			if ($segments[0] === $this->model->getTable()) {
 				$this->query->addSelect($this->model->getVersionTable() . '.*');
 				break;
@@ -129,14 +131,21 @@ trait BuilderTrait {
 			return false;
 		}
 
-		// update version table records
 		$db = $this->query->getConnection();
+		$versionKeyName = $this->model->getVersionKeyName();
+		$modelKeyName = $this->model->getKeyName();
+		$versionColumn = $this->model->getVersionColumn();
+		$latestVersionColumn = $this->model->getLatestVersionColumn();
+		$versionTable = $this->model->getVersionTable();
+		$versionedAttributeNames = $this->model->getVersionedAttributeNames();
+
+		// update version table records
 		foreach ($affectedRecords as $record) {
 			$recordVersionValues = [];
 			$wrappedRecord = $this->wrapRecord($record);
 
 			// get versioned values from record
-			foreach ($this->model->getVersionedAttributeNames() as $key) {
+			foreach ($versionedAttributeNames as $key) {
 				$recordVersionValues[$key] = $versionValues[$key] ?? $wrappedRecord[$key] ?? null;
 			}
 
@@ -144,17 +153,17 @@ trait BuilderTrait {
 			$recordVersionValues = array_merge($recordVersionValues, $versionValues);
 
 			// set version and ref_id
-			$recordVersionValues[$this->model->getVersionKeyName()] = $record->{$this->model->getKeyName()};
-			$recordVersionValues[$this->model->getVersionColumn()] = $record->{$this->model->getLatestVersionColumn()} + 1;
+			$recordVersionValues[$versionKeyName] = $record->{$modelKeyName};
+			$recordVersionValues[$versionColumn]  = $record->{$latestVersionColumn} + 1;
 
 			// insert new version
-			if (! $db->table($this->model->getVersionTable())->insert($recordVersionValues)) {
+			if (! $db->table($versionTable)->insert($recordVersionValues)) {
 				return false;
 			}
 		}
 
 		// fill the latest version value
-		$this->model->{$this->model->getLatestVersionColumn()}++;
+		$this->model->{$latestVersionColumn}++;
 
 		return true;
 	}
@@ -226,7 +235,11 @@ trait BuilderTrait {
 
 		$versionedKeys = array_merge(
 			$this->model->getVersionedAttributeNames(),
-			[$this->model->getLatestVersionColumn(), $this->model->getVersionColumn(), $this->model->getVersionKeyName()]
+			[
+				$this->model->getLatestVersionColumn(),
+				$this->model->getVersionColumn(),
+				$this->model->getVersionKeyName()
+			]
 		);
 
 		foreach ($values as $key => $value) {
@@ -264,12 +277,12 @@ trait BuilderTrait {
 	 * Check if key is in versioned keys.
 	 *
 	 * @param string $key
-	 * @param array  $versionedKeys
+	 * @param array<string>  $versionedKeys
 	 *
 	 * @return string|null
 	 * @throws \BinaryCocoa\Versioning\Exceptions\VersioningException
 	 */
-	protected function isVersionedKey($key, array $versionedKeys): ?string {
+	protected function isVersionedKey(string $key, array $versionedKeys): ?string {
 		$segments = explode('.', $key);
 
 		if (count($segments) > 2) {
@@ -280,7 +293,11 @@ trait BuilderTrait {
 			return $segments[0];
 		}
 
-		if (count($segments) === 2 && $segments[0] === $this->model->getVersionTable() && in_array($segments[1], $versionedKeys)) {
+		if (
+			count($segments) === 2
+			&& $segments[0] === $this->model->getVersionTable()
+			&& in_array($segments[1], $versionedKeys)
+		) {
 			return $segments[1];
 		}
 
@@ -290,11 +307,11 @@ trait BuilderTrait {
 	/**
 	 * Wrap record so we can access the correct values.
 	 *
-	 * @param object|Model $record
+	 * @param object&Model $record
 	 *
 	 * @return \ArrayObject
 	 */
-	protected function wrapRecord($record): \ArrayObject {
-		return new \ArrayObject($record instanceof  Model ? $record->getAttributes() : $record);
+	protected function wrapRecord(object $record): ArrayObject {
+		return new ArrayObject($record instanceof  Model ? $record->getAttributes() : $record);
 	}
 }

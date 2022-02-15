@@ -61,9 +61,8 @@ class User extends Authenticatable {
 	 * @param  \DateTimeInterface  $date
 	 * @return string
 	 */
-	protected function serializeDate(DateTimeInterface $date)
-	{
-	    return $date->toJson();
+	protected function serializeDate(DateTimeInterface $date) {
+		return $date->toJson();
 	}
 
 	/**
@@ -71,8 +70,7 @@ class User extends Authenticatable {
 	 *
 	 * @return \Illuminate\Database\Eloquent\Factories\Factory
 	 */
-	protected static function newFactory()
-	{
+	protected static function newFactory() {
 		return UserFactory::new();
 	}
 }
