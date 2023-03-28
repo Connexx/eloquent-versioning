@@ -12,11 +12,11 @@ Eloquent Versioning is distributed as a composer package. So you first have to a
 "repositories": [
     {
         "type": "vcs",
-        "url": "https://github.com/BinaryCocoa/eloquent-versioning"
+        "url": "https://github.com/Connexx/eloquent-versioning"
     }
 ],
 "require": {
-    "binary-cocoa/eloquent-versioning": "~3.0"
+    "connexx/eloquent-versioning": "^1.0"
 }
 ```
 
