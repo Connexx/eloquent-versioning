@@ -90,7 +90,7 @@ class SoftDeletesTest extends TestCase {
 	/**
 	 * @return array
 	 */
-	public function modelProvider(): array {
+	public static function modelProvider(): array {
 		return [
 			[
 				User::class
